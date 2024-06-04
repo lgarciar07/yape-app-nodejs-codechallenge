@@ -1,3 +1,98 @@
+# Detalles de mi solución al desafío :rocket:
+Como primer paso, he optado por utilizar MongoDB, una base de datos no relacional, para el desarrollo del proyecto. Esta elección se basa en el hecho de que MongoDB puede proporcionar un rendimiento superior en escenarios de alta concurrencia tanto en lectura como en escritura.
+
+# Tecnologías utilizadas
+
+1. NestJS
+2. MongoDB
+3. Kafka
+4. GraphQL
+
+# Cómo ejecutar los servicios
+
+1. En la raíz del proyecto, ejecutar el comando `docker-compose up -d` para iniciar los servicios de Docker que contienen Kafka y MongoDB. Asegurarse de que Docker esté en funcionamiento en la máquina local antes de continuar.
+   ```
+   docker-compose up -d
+   ```
+2. Para iniciar el servicio de transacciones, abrir una consola y ejecuta el siguiente comando:
+   ```
+   nest start transaction-service
+   ```
+3. Para iniciar el servicio antifraude, abrir una nueva consola en la raíz del proyecto y ejecutar el siguiente comando:
+   ```
+   nest start anti-fraud-service
+   ```
+
+## Solicitudes con Postman utilizando GraphQL
+
+### Crear transferencia:
+- URL: http://localhost:3000/graphql
+```json
+{
+   "query": "mutation($input: CreateTransactionInput!) { createTransaction(input: $input) { id status value createdAt } }",
+   "variables": {
+      "input": {
+         "accountExternalIdDebit": "{{$guid}}",
+         "accountExternalIdCredit": "{{$guid}}",
+         "transferTypeId": 1,
+         "value": 1000,
+         "transactionType":{
+            "name" : "debito"
+         }
+      }
+   }
+}
+```
+La función descrita en el bloque de código GraphQL tiene como objetivo realizar una mutación para crear una transacción. Aquí está la descripción funcional de los elementos involucrados:
+
+- **Query**: Es una operación de mutación que lleva a cabo un cambio en la base de datos, en este caso, la creación de una transacción.
+- **Variables**: Son los parámetros necesarios para ejecutar la mutación. En este caso:
+   - **Input**: Es un objeto que contiene los detalles de la transacción que se va a crear.
+      - **accountExternalIdDebit**: Representa el identificador externo de la cuenta de débito involucrada en la transacción.
+      - **accountExternalIdCredit**: Representa el identificador externo de la cuenta de crédito involucrada en la transacción.
+      - **transferTypeId**: Indica el tipo de transferencia que se está realizando.
+      - **value**: Es el valor monetario de la transacción, en este caso, 1000.
+
+Al ejecutar esta mutación con las variables proporcionadas, se espera que devuelva un objeto con los siguientes campos:
+- **id**: Identificador único de la transacción creada.
+- **status**: Estado actual de la transacción.
+- **value**: Valor de la transacción realizada.
+- **createdAt**: Fecha y hora en que se creó la transacción.
+
+En resumen, esta operación de mutación permite crear una nueva transacción con los detalles especificados en las variables y devuelve la información relevante de la transacción creada.
+
+![createTransfer.png](createTransfer.png)
+
+### Listar transferencia:
+- URL: http://localhost:3000/graphql
+```json
+{
+  "query": "query($id: String!) { getTransaction(id: $id) { transactionExternalId transactionType{name} transactionStatus {name} value createdAt } }",
+  "variables": {
+    "id": "662094e582ee185199fda767"
+  }
+}
+```
+Funcionalmente el bloque de código GraphQL se define lo siguiente:
+
+- **Query**: La operación realizada es una consulta (Query) que tiene como objetivo obtener información relevante de una transacción específica en la base de datos.
+- **Variables**: Se utiliza una variable llamada `$id` que se espera sea de tipo String y es requerida para identificar la transacción que se desea recuperar. En este caso, se proporciona el ID "662094e582ee185199fda767".
+
+La estructura de la consulta busca recuperar los siguientes campos de la transacción identificada por el ID `$id`:
+- **transactionExternalId**: Es el identificador externo de la transacción.
+- **transactionType{name}**: Contiene el nombre del tipo de transacción realizada.
+- **transactionStatus{name}**: Indica el estado actual de la transacción.
+- **value**: Representa el valor o monto de la transacción.
+- **createdAt**: Muestra la fecha y hora en la que se creó la transacción.
+
+En resumen, al ejecutar esta consulta GraphQL con la variable proporcionada, se espera obtener detalles específicos de la transacción correspondiente al ID "662094e582ee185199fda767", incluyendo su identificador externo, tipo, estado, valor y fecha de creación.
+
+![listTransfer.png](listTransfer.png)
+
+Desarrollador: Luis Gustavo Garcia Reyna
+Celular: 951**9***
+Correo: lgr.developer.07@gmail.com
+
 # Yape Code Challenge :rocket:
 
 Our code challenge will let you marvel us with your Jedi coding skills :smile:. 
