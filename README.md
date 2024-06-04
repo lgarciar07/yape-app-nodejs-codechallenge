@@ -89,9 +89,8 @@ En resumen, al ejecutar esta consulta GraphQL con la variable proporcionada, se 
 
 ![listTransfer.png](listTransfer.png)
 
-Desarrollador: Luis Gustavo Garcia Reyna
-Celular: 951**9***
-Correo: lgr.developer.07@gmail.com
+- Desarrollador: Luis Gustavo Garcia Reyna
+- Correo: lgr.developer.07@gmail.com
 
 # Yape Code Challenge :rocket:
 
